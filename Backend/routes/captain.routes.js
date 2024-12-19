@@ -15,6 +15,14 @@ router.post('/register',[
     body('vehicle.vehicleType').isIn(['car','motorcycle','auto']).withMessage('Vehicle type must be car, motorcycle or auto'),
 ],captainController.registerCaptain);
 
+router.post('/login',[
+    body('email').isEmail().withMessage('Please add a valid email address with a .com or .in domain').isLength({min: 5}),
+    body('password').isLength({min: 5}).withMessage('Password must be at least 5 characters long')
+],captainController.loginCaptain);
+
+router.get('/profile',authMiddleware.authCaptain, captainController.getCaptainProfile);
+router.get('/logout',authMiddleware.authCaptain,captainController.logoutCaptain);
+
 
 
 module.exports = router;
