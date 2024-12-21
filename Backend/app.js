@@ -7,6 +7,7 @@ const connectToDB = require('./db/db');
 const userRouter = require('./routes/user.routes');
 const captainRouter = require('./routes/captain.routes');
 
+
 const app = express();
 
 // Middleware
