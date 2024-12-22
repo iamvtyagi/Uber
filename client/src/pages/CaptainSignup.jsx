@@ -1,5 +1,8 @@
 import React, { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
+import { CaptainDataContext } from '../context/CaptainContext'
+import { useNavigate } from 'react-router-dom'
+import axios from 'axios' 
 
 const CaptainSignup = () => {
   const navigate = useNavigate()
@@ -13,7 +16,9 @@ const CaptainSignup = () => {
   const [vehicleCapacity, setVehicleCapacity] = useState('')
   const [vehicleType, setVehicleType] = useState('')
 
-  const submitHandler = (e) => {
+  const { captain, setCaptain } = React.useContext(CaptainDataContext)
+
+  const submitHandler =async (e) => {
     e.preventDefault()
 
     // Here, you can handle the user data, e.g., store it locally or proceed with other actions.
@@ -33,7 +38,14 @@ const CaptainSignup = () => {
     }
 
     // console.log(captainData) 
-
+    const res = await axios.post(`${import.meta.env.VITE_BASE_URL}/captains/register`, captainData);
+  if(res.status === 201){
+    const data = res.data;
+    // console.log(res);
+    // console.log(data);
+    localStorage.setItem('token', data.token)
+    setCaptain(data.captain);
+  }
     // Reset the form fields after submission
     setEmail('')
     setFirstName('')

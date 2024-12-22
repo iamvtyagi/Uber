@@ -1,22 +1,43 @@
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState, useContext } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import axios from 'axios'
+import { UserDataContext } from '../context/UserContext'
 
 const UserSignup = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [firstName, setFirstName] = useState('')
-  const [lastName, setLastName] = useState('')
+  const [firstname, setFirstname] = useState('')
+  const [lastname, setLastname] = useState('')
+  const [error, setError] = useState('')
+  const navigate = useNavigate()
+
+  const [user, setUser] = useContext(UserDataContext)
 
   const submitHandler = async (e) => {
     e.preventDefault()
+    setError('')
+    
     const newUser = {
       fullname: {
-        firstname: firstName,
-        lastname: lastName
+        firstname,
+        lastname
       },
-      email: email,
-      password: password
+      email,
+      password
     }
+  try {
+    const res = await axios.post(`${import.meta.env.VITE_BASE_URL}/users/register`, newUser);
+    if (res.status === 201) {
+      const data = res.data;
+      // console.log(res);
+      // console.log(data);
+      localStorage.setItem('token', data.token)
+      setUser(data.user);
+      navigate('/home');
+    }
+  }catch (error) {
+    setError(error.response.data.message);
+  }
   }
 
   return (
@@ -25,8 +46,13 @@ const UserSignup = () => {
         <div>
           <img className='w-16 mb-10' src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYQy-OIkA6In0fTvVwZADPmFFibjmszu2A0g&s" alt="" />
 
-          <form onSubmit={submitHandler}>
+          {error && (
+            <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4">
+              {error}
+            </div>
+          )}
 
+          <form onSubmit={submitHandler}>
             <h3 className='text-lg w-1/2 font-medium mb-2'>What's your name</h3>
             <div className='flex gap-4 mb-7'>
               <input
@@ -34,16 +60,16 @@ const UserSignup = () => {
                 className='bg-[#eeeeee] w-1/2 rounded-lg px-4 py-2 border text-lg placeholder:text-base'
                 type="text"
                 placeholder='First name'
-                value={firstName}
-                onChange={(e) => setFirstName(e.target.value)}
+                value={firstname}
+                onChange={(e) => setFirstname(e.target.value)}
               />
               <input
                 required
                 className='bg-[#eeeeee] w-1/2 rounded-lg px-4 py-2 border text-lg placeholder:text-base'
                 type="text"
                 placeholder='Last name'
-                value={lastName}
-                onChange={(e) => setLastName(e.target.value)}
+                value={lastname}
+                onChange={(e) => setLastname(e.target.value)}
               />
             </div>
 
@@ -58,7 +84,6 @@ const UserSignup = () => {
             />
 
             <h3 className='text-lg font-medium mb-2'>Enter Password</h3>
-
             <input
               className='bg-[#eeeeee] mb-7 rounded-lg px-4 py-2 border w-full text-lg placeholder:text-base'
               value={password}
@@ -71,7 +96,6 @@ const UserSignup = () => {
             <button
               className='bg-[#111] text-white font-semibold mb-3 rounded-lg px-4 py-2 w-full text-lg placeholder:text-base'
             >Create account</button>
-
           </form>
           <p className='text-center'>Already have an account? <Link to='/login' className='text-blue-600'>Login here</Link></p>
         </div>
