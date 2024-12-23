@@ -13,15 +13,24 @@ const app = express();
 // Middleware
 connectToDB();
 
-app.use(cors());
+app.use(cors(
+    {
+        origin: 'http://localhost:5173',
+        credentials: true,
+    }
+));
 
-app.use(express.json());
+app.use(express.json());  // done jab client browser ya postman data bheje to express use samjh paye data in json format
 app.use(express.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded (HTML form data)
 app.use(cookieParser());
 
 // Routes
 app.get('/', (req, res) => {
-    res.send('Hello World');
+   message = 'your device got Hacked';
+   res.status(200).json({
+    success: true,
+    message
+   });
 });
 app.use('/users', userRouter); 
 app.use('/captains', captainRouter);

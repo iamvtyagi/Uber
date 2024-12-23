@@ -7,13 +7,12 @@ import { toast } from 'react-toastify'; // Ensure you have 'react-toastify' inst
 const UserLogin = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [userData, setUserData] = useState({});
   const [user, setUser] = useContext(UserDataContext);
   const navigate = useNavigate();
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    setUserData({
+   const userData = ({
       email: email,
       password: password
     });

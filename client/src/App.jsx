@@ -5,7 +5,6 @@ import UserLogin from './pages/UserLogin'
 import UserSignup from './pages/UserSignup'
 import CaptainLogin from './pages/CaptainLogin'
 import CaptainSignup from './pages/CaptainSignup'
-// import { UserDataContext } from './conetext/UserContext'
 import Start from './pages/Start'
 import UserProtectedWrapper from './pages/UserProtectedWrapper'
 import UserLogout from './pages/UserLogout'
@@ -31,7 +30,7 @@ const App = () => {
         </UserProtectedWrapper>
       }/>   
       <Route path ='/user/logout' element = {
-        < UserProtectedWrapper>
+        <UserProtectedWrapper>
           <UserLogout/>
         </UserProtectedWrapper>
       }/>
