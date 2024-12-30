@@ -16,6 +16,7 @@ connectToDB();
 app.use(cors(
     {
         origin: 'http://localhost:5173',
+        withCredentials: true,
         credentials: true,
     }
 ));

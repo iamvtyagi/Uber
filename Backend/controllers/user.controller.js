@@ -67,9 +67,9 @@ module.exports.loginUser = async (req,res,next) =>{
     
     // Set token in cookie
     res.cookie('token', token, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: 'strict',
+        httpOnly: true,      // JavaScript se access block kare
+        secure: false,        // HTTPS ke liye (local development mei false rakhein)
+        sameSite: 'lax',     // CSRF attacks ke liye
         maxAge: 24 * 60 * 60 * 1000 // 24 hours
     });
 
