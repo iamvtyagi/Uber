@@ -13,11 +13,14 @@ function Home() {
   const [panelOpen, setpanelOpen] = useState(false);
   const panelRef = useRef(null);
   const vehicleFoundRef = useRef(null);
+  const waitingForDriverRef = useRef(null);
   const [vehicalPanelopen, setvehicalPanelopen] = useState(false);
   const [confirmedRideopen, setconfirmedRideopen] = useState(false);
   const vehicalPanelRef = useRef(null);
   const confirmedRideRef = useRef(null);
   const [vehicleFound, setvehicleFound] = useState(false);
+  const [waitingForDriver, setwaitingForDriver] = useState(false); 
+
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -38,6 +41,22 @@ function Home() {
       });
     }
   }, [vehicalPanelopen]);
+
+  useEffect(() => {
+    if (waitingForDriver) {
+      gsap.to(waitingForDriverRef.current, {
+        transform: 'translateY(0)',
+        duration: 0.5,
+        ease: 'easeInOut',
+      });
+    } else {
+      gsap.to(waitingForDriverRef.current, {
+        transform: 'translateY(100%)',
+        duration: 0.5,
+        ease: 'easeInOut',
+      });
+    }
+  }, [waitingForDriver]); 
 
 
   useEffect(() => {
@@ -131,11 +150,11 @@ function Home() {
       </div>
 
       <div  ref={vehicleFoundRef} className='fixed w-full z-10 bottom-0 px-3 py-10  translate-y-full bg-white'>
-           <LookingForDriver vehicleFound={vehicleFound} setvehicleFound={setvehicleFound} />
+           <LookingForDriver vehicleFound={vehicleFound}  setconfirmedRideopen={setconfirmedRideopen} setvehicleFound={setvehicleFound} />
       </div>
 
-      <div   className='fixed w-full z-10 bottom-0 px-3 py-10  translate-y-full bg-white'>
-           <WaitingForDriver/>
+      <div ref={waitingForDriverRef} className='fixed w-full z-10 bottom-0 px-3 py-10   bg-white'>
+           <WaitingForDriver waitingForDriver={waitingForDriver} setwaitingForDriver={setwaitingForDriver}/>
       </div>
       
     </div>
