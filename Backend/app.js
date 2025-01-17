@@ -13,7 +13,13 @@ const app = express();
 // Middleware
 connectToDB();
 
-app.use(cors({ origin: '*', credentials: true }));
+app.use(cors(
+    {
+        origin: process.env.ORIGIN,
+        withCredentials: true,
+        credentials: true,
+    }
+));
 
 app.use(express.json());  // done jab client browser ya postman data bheje to express use samjh paye data in json format
 app.use(express.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded (HTML form data)
