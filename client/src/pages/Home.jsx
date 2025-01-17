@@ -19,7 +19,7 @@ function Home() {
   const vehicalPanelRef = useRef(null);
   const confirmedRideRef = useRef(null);
   const [vehicleFound, setvehicleFound] = useState(false);
-  const [waitingForDriver, setwaitingForDriver] = useState(false); 
+  const [waitingForDriver, setwaitingForDriver] = useState(false);
 
 
   const submitHandler = (e) => {
@@ -56,7 +56,7 @@ function Home() {
         ease: 'easeInOut',
       });
     }
-  }, [waitingForDriver]); 
+  }, [waitingForDriver]);
 
 
   useEffect(() => {
@@ -138,25 +138,23 @@ function Home() {
       </div>
 
       <div ref={vehicalPanelRef} className='fixed w-full z-10 bottom-0 px-3 py-10  translate-y-full bg-white'>
-           
-           <VehinclePanel confirmedRideopen={confirmedRideopen} setconfirmedRideopen={setconfirmedRideopen} vehicalPanelopen={vehicalPanelopen} setvehicalPanelopen={setvehicalPanelopen} />
-
+        <VehinclePanel confirmedRideopen={confirmedRideopen} setconfirmedRideopen={setconfirmedRideopen} vehicalPanelopen={vehicalPanelopen} setvehicalPanelopen={setvehicalPanelopen} />
       </div>
 
 
 
       <div ref={confirmedRideRef} className='fixed w-full z-10 bottom-0 px-3 py-10  translate-y-full bg-white'>
-           <ConfirmedRide confirmedRideopen={confirmedRideopen} setconfirmedRideopen={setconfirmedRideopen} vehicleFound={vehicleFound} setvehicleFound={setvehicleFound}  />
+        <ConfirmedRide confirmedRideopen={confirmedRideopen} setconfirmedRideopen={setconfirmedRideopen} vehicleFound={vehicleFound} setvehicleFound={setvehicleFound} />
       </div>
 
-      <div  ref={vehicleFoundRef} className='fixed w-full z-10 bottom-0 px-3 py-10  translate-y-full bg-white'>
-           <LookingForDriver vehicleFound={vehicleFound}  setconfirmedRideopen={setconfirmedRideopen} setvehicleFound={setvehicleFound} />
+      <div ref={vehicleFoundRef} className='fixed w-full z-10 bottom-0 px-3 py-10  translate-y-full bg-white'>
+        <LookingForDriver vehicleFound={vehicleFound} setconfirmedRideopen={setconfirmedRideopen} setvehicleFound={setvehicleFound} />
       </div>
 
       <div ref={waitingForDriverRef} className='fixed w-full z-10 bottom-0 px-3 py-10   bg-white'>
-           <WaitingForDriver waitingForDriver={waitingForDriver} setwaitingForDriver={setwaitingForDriver}/>
+        <WaitingForDriver waitingForDriver={waitingForDriver} setwaitingForDriver={setwaitingForDriver} />
       </div>
-      
+
     </div>
   );
 }
